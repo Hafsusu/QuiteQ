@@ -47,7 +47,7 @@ export const ModeCard: React.FC<ModeCardProps> = ({ mode, style }) => {
     <TouchableOpacity
       style={[
         styles.container,
-        { backgroundColor: isActive ? `${mode.color}20` : '#fff' },
+        { backgroundColor: isActive ? '#fff' : '#fff' },
         style,
       ]}
       onPress={handlePress}
@@ -57,13 +57,13 @@ export const ModeCard: React.FC<ModeCardProps> = ({ mode, style }) => {
         <View
           style={[
             styles.iconBackground,
-            { backgroundColor: isActive ? mode.color : COLORS.gray[100] },
+            { backgroundColor: isActive ? COLORS.gray[100] : COLORS.gray[100] },
           ]}
         >
           <Icon
             name={getIconName()}
             size={28}
-            color={isActive ? '#fff' : COLORS.gray[600]}
+            color={isActive ? COLORS.gray[600] : COLORS.gray[600]}
           />
         </View>
       </View>

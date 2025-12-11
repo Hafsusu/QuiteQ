@@ -4,10 +4,9 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  SafeAreaView,
-  StyleSheet,
 } from 'react-native';
-// import { useTailwind } from 'tailwind-react-native-classnames';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import tw from 'tailwind-react-native-classnames';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { COLORS } from '@/constants/colors';
 import { MODE_LIST } from '@/constants/modes';
@@ -15,55 +14,50 @@ import { useModeStore } from '@/store/modeStore';
 import { ModeCard } from '@/components/common/ModeCard';
 
 export const HomeScreen = () => {
-//   const tw = useTailwind();
   const { activeModes, deactivateAllModes } = useModeStore();
-  
   const isAnyModeActive = activeModes.length > 0;
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView style={styles.scrollView}>
-        {/* Header */}
-        <View style={styles.header}>
+    <SafeAreaView style={tw`flex-1 bg-primary-100`}>
+      <ScrollView style={tw`flex-1`}>
+        <View style={tw`bg-prussian-blue-900 px-6 pt-6 pb-8 flex-row justify-between items-center`}>
           <View>
-            <Text style={styles.headerTitle}>Quiet Assistant</Text>
-            <Text style={styles.headerSubtitle}>
+            <Text style={tw`text-3xl font-bold text-prussian-blue-500`}>Quiet Assistant</Text>
+            <Text style={tw`text-base text-prussian-blue-100 mt-1`}>
               Stay focused during important moments
             </Text>
           </View>
-          <TouchableOpacity style={styles.statsButton}>
-            <Icon name="chart-box" size={24} color="#fff" />
+          <TouchableOpacity style={tw`w-12 h-12 rounded-full bg-white/10 justify-center items-center`}>
+            <Icon name="chart-box" size={24} color="" />
           </TouchableOpacity>
         </View>
 
-        {/* Active Modes Banner */}
         {isAnyModeActive && (
-          <View style={styles.activeModesBanner}>
-            <View style={styles.activeModesContent}>
+          <View style={tw`mx-6 -mt-4 bg-prussian-blue-400 rounded-xl p-4 border-l-4 border-prussian-blue-500 elevation-2`}>
+            <View style={tw`flex-row justify-between items-center mb-3`}>
               <View>
-                <Text style={styles.activeModesTitle}>
+                <Text style={tw`text-lg font-semibold text-prussian-blue-900`}>
                   Active Mode{activeModes.length > 1 ? 's' : ''}
                 </Text>
-                <Text style={styles.activeModesSubtitle}>
+                <Text style={tw`text-sm text-prussian-blue-600 mt-1`}>
                   {activeModes.length} mode{activeModes.length > 1 ? 's' : ''} currently active
                 </Text>
               </View>
               <TouchableOpacity
                 onPress={deactivateAllModes}
-                style={styles.stopAllButton}
+                style={tw`bg-red-500 px-4 py-2 rounded-lg`}
               >
-                <Text style={styles.stopAllText}>Stop All</Text>
+                <Text style={tw`text-white font-semibold text-sm`}>Stop All</Text>
               </TouchableOpacity>
             </View>
             
-            {/* Active modes list */}
             <ScrollView 
               horizontal 
               showsHorizontalScrollIndicator={false}
-              style={styles.activeModesScroll}
+              style={tw`flex-row`}
             >
               {activeModes.map((mode) => (
-                <View key={mode.id} style={styles.activeModeTag}>
+                <View key={mode.id} style={tw`flex-row items-center bg-prussian-blue-500/10 px-3 py-1.5 rounded-full mr-2`}>
                   <Icon 
                     name={
                       mode.type === 'prayer' ? 'mosque' :
@@ -74,7 +68,7 @@ export const HomeScreen = () => {
                     size={16}
                     color={COLORS.primary[600]}
                   />
-                  <Text style={styles.activeModeText}>
+                  <Text style={tw`text-xs font-semibold text-prussian-blue-700 ml-1.5`}>
                     {mode.type.charAt(0).toUpperCase() + mode.type.slice(1)}
                   </Text>
                 </View>
@@ -83,238 +77,66 @@ export const HomeScreen = () => {
           </View>
         )}
 
-        {/* Quick Actions */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Quick Start</Text>
-          <Text style={styles.sectionSubtitle}>
+        <View style={tw`px-6 mt-6`}>
+          <Text style={tw`text-2xl font-bold text-success-500 mb-2`}>Quick Start</Text>
+          <Text style={tw`text-gray-600`}>
             Select a mode to begin. Your phone will be silenced and auto-replies will be sent.
           </Text>
         </View>
 
-        {/* Mode Grid */}
-        <View style={styles.modesGrid}>
-          {MODE_LIST.map((mode) => (
-            <ModeCard
-              key={mode.id}
-              mode={mode}
-              style={styles.modeCard}
-            />
-          ))}
+        <View style={tw`px-6 mt-4`}>
+          <View style={tw`grid grid-row justify-between`}>
+            {MODE_LIST.map((mode) => (
+              <ModeCard
+                key={mode.id}
+                mode={mode}
+                style={tw`w-[40%] mb-4`}
+              />
+            ))}
+          </View>
         </View>
 
-        {/* Recent Activity */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Recent Activity</Text>
+        <View style={tw`px-6 mt-8`}>
+          <View style={tw`flex-row justify-between items-center mb-3`}>
+            <Text style={tw`text-2xl font-bold text-gray-900`}>Recent Activity</Text>
             <TouchableOpacity>
-              <Text style={styles.seeAllText}>See All</Text>
+              <Text style={tw`text-prussian-blue-500 font-semibold`}>See All</Text>
             </TouchableOpacity>
           </View>
           
-          <View style={styles.activityCard}>
+          <View style={tw`bg-gray-50 rounded-xl p-4 flex-row items-center`}>
             <Icon name="history" size={24} color={COLORS.gray[500]} />
-            <View style={styles.activityContent}>
-              <Text style={styles.activityTitle}>No activity yet</Text>
-              <Text style={styles.activityText}>
+            <View style={tw`ml-3 flex-1`}>
+              <Text style={tw`text-base font-semibold text-gray-900`}>No activity yet</Text>
+              <Text style={tw`text-sm text-gray-600 mt-1`}>
                 Activate a mode to see your call logs here
               </Text>
             </View>
           </View>
         </View>
 
-        {/* Quick Tips */}
-        <View style={styles.tipsContainer}>
-          <Text style={styles.tipsTitle}>💡 Quick Tips</Text>
-          <View style={styles.tipItem}>
-            <Icon name="check-circle" size={16} color={COLORS.success[500]} />
-            <Text style={styles.tipText}>Each mode has customizable messages</Text>
+        <View style={tw`mx-6 mt-8 mb-8 bg-prussian-blue-50 rounded-xl p-5`}>
+          <Text style={tw`text-lg font-bold text-prussian-blue-900 mb-3`}>Quick Tips</Text>
+          <View style={tw`flex-row items-center mb-2.5`}>
+            <Icon name="check-circle" size={16} color={COLORS.primary[700]} />
+            <Text style={tw`text-sm text-prussian-blue-800 ml-2.5 flex-1`}>
+              Each mode has customizable messages
+            </Text>
           </View>
-          <View style={styles.tipItem}>
-            <Icon name="check-circle" size={16} color={COLORS.success[500]} />
-            <Text style={styles.tipText}>Set automatic activation by time or location</Text>
+          <View style={tw`flex-row items-center mb-2.5`}>
+            <Icon name="check-circle" size={16} color={COLORS.primary[700]} />
+            <Text style={tw`text-sm text-prussian-blue-800 ml-2.5 flex-1`}>
+              Set automatic activation by time or location
+            </Text>
           </View>
-          <View style={styles.tipItem}>
-            <Icon name="check-circle" size={16} color={COLORS.success[500]} />
-            <Text style={styles.tipText}>Emergency contacts can bypass modes</Text>
+          <View style={tw`flex-row items-center`}>
+            <Icon name="check-circle" size={16} color={COLORS.primary[700]} />
+            <Text style={tw`text-sm text-prussian-blue-800 ml-2.5 flex-1`}>
+              Emergency contacts can bypass modes
+            </Text>
           </View>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: COLORS.background.light,
-  },
-  scrollView: {
-    flex: 1,
-  },
-  header: {
-    backgroundColor: COLORS.primary[900],
-    paddingHorizontal: 24,
-    paddingTop: 24,
-    paddingBottom: 32,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  headerTitle: {
-    fontSize: 32,
-    fontWeight: '700',
-    color: '#fff',
-  },
-  headerSubtitle: {
-    fontSize: 16,
-    color: COLORS.primary[100],
-    marginTop: 4,
-  },
-  statsButton: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  activeModesBanner: {
-    backgroundColor: COLORS.primary[50],
-    marginHorizontal: 24,
-    marginTop: -16,
-    borderRadius: 16,
-    padding: 16,
-    borderLeftWidth: 4,
-    borderLeftColor: COLORS.primary[500],
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-  },
-  activeModesContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  activeModesTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: COLORS.primary[900],
-  },
-  activeModesSubtitle: {
-    fontSize: 14,
-    color: COLORS.primary[600],
-    marginTop: 2,
-  },
-  stopAllButton: {
-    backgroundColor: COLORS.error[500],
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 8,
-  },
-  stopAllText: {
-    color: '#fff',
-    fontWeight: '600',
-    fontSize: 14,
-  },
-  activeModesScroll: {
-    flexDirection: 'row',
-  },
-  activeModeTag: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'rgba(45, 116, 210, 0.1)',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
-    marginRight: 8,
-    gap: 6,
-  },
-  activeModeText: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: COLORS.primary[700],
-  },
-  section: {
-    paddingHorizontal: 24,
-    marginTop: 24,
-  },
-  sectionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: COLORS.text.primary,
-  },
-  sectionSubtitle: {
-    fontSize: 16,
-    color: COLORS.text.secondary,
-    marginTop: 4,
-  },
-  seeAllText: {
-    color: COLORS.primary[500],
-    fontWeight: '600',
-  },
-  modesGrid: {
-    paddingHorizontal: 24,
-    marginTop: 16,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
-  modeCard: {
-    width: '48%',
-    marginBottom: 16,
-  },
-  activityCard: {
-    backgroundColor: COLORS.gray[50],
-    borderRadius: 16,
-    padding: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  activityContent: {
-    flex: 1,
-  },
-  activityTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: COLORS.text.primary,
-  },
-  activityText: {
-    fontSize: 14,
-    color: COLORS.text.secondary,
-    marginTop: 2,
-  },
-  tipsContainer: {
-    margin: 24,
-    marginTop: 32,
-    backgroundColor: COLORS.primary[50],
-    borderRadius: 16,
-    padding: 20,
-  },
-  tipsTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: COLORS.primary[900],
-    marginBottom: 12,
-  },
-  tipItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-    gap: 10,
-  },
-  tipText: {
-    fontSize: 14,
-    color: COLORS.primary[800],
-    flex: 1,
-  },
-});

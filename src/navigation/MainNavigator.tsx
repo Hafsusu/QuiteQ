@@ -2,9 +2,9 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { HomeScreen } from '@/screens/HomeScreen';
-import { COLORS } from '@/constants/colors';
 import { ModesScreen } from '@/screens/ModesScreen';
 import { SettingsScreen } from '@/screens/SettingsScreen';
+import { COLORS } from '@/constants/colors';
 
 const Tab = createBottomTabNavigator();
 
